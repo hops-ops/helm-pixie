@@ -1,0 +1,13 @@
+apiVersion: helm.hops.ops.com.ai/v1alpha1
+kind: Pixie
+metadata:
+  name: pixie
+  namespace: example-env
+spec:
+  clusterName: example-cluster
+  labels:
+    team: platform
+  values:
+    cloudAddr: getcosmic.ai
+    clusterName: example-cluster
+    pemMemoryLimit: 2Gi

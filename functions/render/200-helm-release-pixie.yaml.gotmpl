@@ -1,0 +1,23 @@
+{{- $state := get $ "$state" }}
+{{- $px := $state.pixie }}
+---
+apiVersion: helm.m.crossplane.io/v1beta1
+kind: Release
+metadata:
+  name: {{ $px.releaseName }}
+  annotations:
+    {{ setResourceNameAnnotation "helm-release-pixie" }}
+  labels: {{ $px.labels | toJson }}
+spec:
+  forProvider:
+    chart:
+      name: pixie-operator-chart
+      repository: https://artifacts.px.dev/helm_charts/operator
+      version: 0.1.7
+    namespace: {{ $px.namespace }}
+    values: {{ $px.values | toJson }}
+  managementPolicies: {{ $px.managementPolicies | toJson }}
+  providerConfigRef:
+    name: {{ $px.providerConfigRef.name }}
+    kind: {{ $px.providerConfigRef.kind }}
+  rollbackLimit: 3
